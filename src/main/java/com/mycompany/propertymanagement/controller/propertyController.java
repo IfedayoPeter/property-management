@@ -16,11 +16,6 @@ public class propertyController {
     @Autowired
     private PropertyService propertyService;
 
-    @GetMapping("/hello")
-    public String sayHello(){
-        return "hello";
-    }
-
     @PostMapping("/properties")
     public ResponseEntity<PropertyDTO> saveProperty(@RequestBody PropertyDTO propertyDTO){
         propertyDTO = propertyService.saveProperty(propertyDTO);
@@ -36,10 +31,10 @@ public class propertyController {
         return responseEntity;
     }
 
+    @PutMapping("/properties/{propertyId}")
     public ResponseEntity<PropertyDTO> updateProperty(@RequestBody PropertyDTO propertyDTO, @PathVariable Long PropertyID){
         propertyDTO = propertyService.updateProperty(propertyDTO, PropertyID);
         ResponseEntity<PropertyDTO> responseEntity = new ResponseEntity<>(propertyDTO, HttpStatus.CREATED);
         return responseEntity;
     }
-
 }
