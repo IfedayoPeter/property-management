@@ -44,13 +44,13 @@ public class PropertyServiceImpl implements PropertyService {
     }
 
     @Override
-    public PropertyDTO updateProperty(PropertyDTO propertyDTO, Long PropertyID) {
+    public PropertyDTO updateProperty(PropertyDTO propertyDTO, Long propertyId) {
 
-        Optional<PropertyEntity> optEn =  propertyRepository.findById(PropertyID);
+        Optional<PropertyEntity> optEn = propertyRepository.findById(propertyId);
         PropertyDTO dto = null;
-        if(optEn.isPresent()){
+        if (optEn.isPresent()) {
 
-            PropertyEntity pe = optEn.get();
+            PropertyEntity pe = optEn.get();//data from database
             pe.setTitle(propertyDTO.getTitle());
             pe.setAddress(propertyDTO.getAddress());
             pe.setOwnerEmail(propertyDTO.getOwnerEmail());
@@ -59,7 +59,34 @@ public class PropertyServiceImpl implements PropertyService {
             pe.setOwnerName(propertyDTO.getOwnerName());
             dto = propertyConverter.convertEntitytoDTO(pe);
             propertyRepository.save(pe);
+        }
+        return dto;
+    }
 
+    @Override
+    public PropertyDTO updatePropertyDescription(PropertyDTO propertyDTO, Long propertyId) {
+        Optional<PropertyEntity> optEn =  propertyRepository.findById(propertyId);
+        PropertyDTO dto = null;
+        if(optEn.isPresent()){
+
+            PropertyEntity pe = optEn.get();//data from database
+            pe.setDescription(propertyDTO.getDescription());
+            dto = propertyConverter.convertEntitytoDTO(pe);
+            propertyRepository.save(pe);
+        }
+        return dto;
+    }
+
+    @Override
+    public PropertyDTO updatePropertyPrice(PropertyDTO propertyDTO, Long propertyId) {
+        Optional<PropertyEntity> optEn =  propertyRepository.findById(propertyId);
+        PropertyDTO dto = null;
+        if(optEn.isPresent()){
+
+            PropertyEntity pe = optEn.get();//data from database
+            pe.setPrice(propertyDTO.getPrice());
+            dto = propertyConverter.convertEntitytoDTO(pe);
+            propertyRepository.save(pe);
         }
         return dto;
     }
